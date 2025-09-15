@@ -1,18 +1,14 @@
 import './App.css'
-import Hello from './components/Hello'
-import Walter from './components/Walter'
-import aurora from './assets/aurora.jpg'
-import andre from "./assets/300.png"
-import Andre from "./components/Andre"
+import Hello from './components/Card/Hello'
+import Form from './components/Eventos/Form'
 
 function App() {
 
   return (
     <section>
-      <Hello/>
-      <Walter name="Andre" age="47" occupation="Jogador de Samp" img={aurora}/>
-      <Walter name="Samp" age="28" occupation="Jogador de Samp" img={andre}/>
-      <Andre />
+      <Hello />
+
+      <Form />
     </section>
   )
 
