@@ -1,19 +1,18 @@
 import './App.css'
 import Hello from './components/Hello'
+import Walter from './components/Walter'
+import aurora from './assets/aurora.jpg'
+import andre from "./assets/300.png"
+import Andre from "./components/Andre"
 
 function App() {
 
-  const name = "Andre Matos"
-  const upperName = name.toUpperCase()
-  const sum = (a,b) => {
-    return a+b
-  }
-
   return (
     <section>
-      <h1>{upperName}</h1>
-      <p><Hello/></p>
-      <small>{sum(46,1)}</small>
+      <Hello/>
+      <Walter name="Andre" age="47" occupation="Jogador de Samp" img={aurora}/>
+      <Walter name="Samp" age="28" occupation="Jogador de Samp" img={andre}/>
+      <Andre />
     </section>
   )
 

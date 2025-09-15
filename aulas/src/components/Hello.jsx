@@ -1,7 +1,8 @@
 function Hello() {
     return (
         <section>
-            <h1>Maestro do Rock</h1>
+            <h1>Andre Matos</h1>
+            <h2>Maestro do Rock</h2>
         </section>
     )
 }
