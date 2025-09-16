@@ -1,14 +1,14 @@
 import './App.css'
 import Hello from './components/Card/Hello'
-import Form from './components/Eventos/Form'
+import Evento from './components/Eventos/Evento'
+import Form from "./components/Eventos/Form"
+import Condicional from './components/Rend/Condicional'
 
 function App() {
 
   return (
     <section>
-      <Hello />
-
-      <Form />
+      <Condicional />
     </section>
   )
 

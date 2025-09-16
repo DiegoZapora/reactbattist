@@ -1,13 +1,19 @@
-const Evento = ({numero}) => {
+import Butao from "./Butao"
+
+const Evento = () => {
 
     const EventSas = () => {
-        console.log(numero)
+        console.log("Eae")
+    }
+
+    const favorito = () => {
+        console.log("Favoritado")
     }
 
     return (
         <section>
-            <p>Sabe God</p>
-            <button onClick={EventSas}>Ativar!</button>
+            <Butao event={EventSas} text="Andre Matos"/> <br />
+            <Butao event={favorito} text="Samp"/> <br />
         </section>
     )
 }
