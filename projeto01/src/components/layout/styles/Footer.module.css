@@ -1,0 +1,36 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.footer {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #222;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white; 
+    margin-top: 20px;
+}
+
+.social_list {
+    display: flex;
+}
+
+.social_list li {
+    margin-right: 10px;
+    list-style: none;
+    font-size: 1.2em;
+}
+
+.social_list li:hover {
+    scale: 1.2;
+    transition: 1s;
+}
+
+.copy_right {
+    margin-top: 5px;
+}

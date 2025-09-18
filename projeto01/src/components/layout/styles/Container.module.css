@@ -1,14 +1,14 @@
 .card {
-    width: 1200px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 0 auto;
     flex-wrap: wrap;
 }
 
 .min-height {
     min-height: 75%;
-    max-width: 100vw;
 }
 
 .start {
