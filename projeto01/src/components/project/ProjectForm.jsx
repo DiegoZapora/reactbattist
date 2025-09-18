@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import Input from "../form/input"
 import Select from "../form/Select"
 import Submit from "../form/Submit"
