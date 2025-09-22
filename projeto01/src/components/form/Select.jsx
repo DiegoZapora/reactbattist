@@ -8,6 +8,9 @@ const Select = ({text, name, handleOnChange, value, options}) => {
             <label htmlFor={name}>{text}</label>
             <select name={name} id={name}>
                 <option>Selecione uma Opção</option>
+                {options.map((e) => (
+                    <option value={e._id} key={e._id}>{e.nome}</option>
+                ))}
             </select>
 
         </div>

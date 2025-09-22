@@ -1,6 +1,7 @@
 import styles from "./styles/Home.module.css"
 import vassoura from "../../assets/Capturar.PNG"
 import LinkButton from "../layout/LinkButton"
+import { Link } from "react-router-dom"
 
 const Home = () => {
 
