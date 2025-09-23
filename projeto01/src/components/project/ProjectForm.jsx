@@ -8,7 +8,7 @@ const ProjectForm = ({btnText}) => {
 
     const [nome, setNome] = useState("")
     const [budget, setBudget] = useState()
-    const [categoria, SetCategorias2] = useState()
+    const [categoria, setCategoria] = useState("")
     const [cateogiras, SetCategorias] = useState([])
 
     const handleSubmit = async (e) => {
@@ -17,7 +17,7 @@ const ProjectForm = ({btnText}) => {
         const novoProjeto = {
             nome,
             budget,
-            categoria
+            categoria: categoria
         }
 
         try {
@@ -36,7 +36,7 @@ const ProjectForm = ({btnText}) => {
 
             setNome("")
             setBudget("")
-            SetCategorias2("")
+            setCategoria("")
         } catch (error) {
             console.log("Erro ao enviar dados", error)
         }
@@ -68,7 +68,7 @@ const ProjectForm = ({btnText}) => {
 
             <Input type={"number"} text={"Orçamento do Projeto: "} name={"budget"} placeholder={"Insira o orçamento"} handleOnChance={(e) => setBudget(e.target.value)} value={budget} />
 
-            <Select text={"Selecione a Categoria"} name={"categoryId"} options={cateogiras} value={categoria} handleOnChange={(e) => SetCategorias2(e.target.value)} />
+            <Select text={"Selecione a Categoria"} name={"categoryId"} options={cateogiras} handleOnChange={(e) => setCategoria(e.target.value)} value={categoria} />
 
             <Submit text={btnText} />
 

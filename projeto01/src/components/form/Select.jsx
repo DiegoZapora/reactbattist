@@ -6,8 +6,8 @@ const Select = ({text, name, handleOnChange, value, options}) => {
         <div className={styles.form_control}>
 
             <label htmlFor={name}>{text}</label>
-            <select name={name} id={name}>
-                <option>Selecione uma Opção</option>
+            <select name={name} id={name} onChange={handleOnChange} value={value}>
+                <option value="">Selecione uma Opção</option>
                 {options.map((e) => (
                     <option value={e._id} key={e._id}>{e.nome}</option>
                 ))}

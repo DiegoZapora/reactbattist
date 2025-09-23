@@ -63,7 +63,7 @@ app.post("/projects", async (req, res) => {
 
 app.get("/projects", async (req, res) => {
     try {
-        const projetos = await Projeto.find()
+        const projetos = await Projeto.find().populate("categoria")
         res.status(200).json(projetos)
     } catch (err) {
         console.log(err)
@@ -74,9 +74,6 @@ app.post("/categorias", async (req, res) => {
     try {
         const novaCategoira = new Categoria(req.body)
         const categoriaSalva = await novaCategoira.save()
-        .then(() => {
-            res.redirect("/categorias")
-        })
         res.status(201).json(categoriaSalva)
     } catch (err) {
         console.log(err)
