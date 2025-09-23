@@ -10,6 +10,7 @@ import NavBar from "./components/layout/NavBar"
 import Footer from "./components/layout/Footer"
 import Categoiras from "./components/pages/Categorias"
 import AddCategorias from "./components/pages/form/AddCategorias"
+import EditCategoria from "./components/pages/form/EditCategoria"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/categorias" element={<Categoiras />}></Route>
           <Route path="/categorias/add" element={<AddCategorias />}></Route>
+          <Route path="/categorias/editar/:id" element={<EditCategoria />}></Route>
           <Route path="/company" element={<Company />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/newproject" element={<NewProject />}></Route>

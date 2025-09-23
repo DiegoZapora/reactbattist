@@ -40,6 +40,8 @@ const Categoiras = () => {
             console.log(err)
         }
     }
+
+    
     
     return (
         <div className={styles.container}>
@@ -50,6 +52,9 @@ const Categoiras = () => {
 
                     <div className={styles.divCard}>{categoria.nome}</div>
                     <button className={styles.btnDelet} onClick={() => handleDelete(categoria._id)}>Excluir</button>
+                    <Link to={`/categorias/editar/${categoria._id}`}>
+                        <button className={styles.btnDelet}>Editar</button>
+                    </Link>
 
                 </div>
             ))}

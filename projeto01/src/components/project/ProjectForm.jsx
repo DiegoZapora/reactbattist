@@ -3,8 +3,16 @@ import Input from "../form/input"
 import Select from "../form/Select"
 import Submit from "../form/Submit"
 import styles from "./styles/ProjectForm.module.css"
+import { useNavigate } from "react-router-dom"
 
 const ProjectForm = ({btnText}) => {
+
+    const navigate = useNavigate()
+
+    const createPost = (project) => {
+        project.cost = 0
+        project.services = []
+    }
 
     const [nome, setNome] = useState("")
     const [budget, setBudget] = useState()
@@ -27,6 +35,9 @@ const ProjectForm = ({btnText}) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(novoProjeto)
+            })
+            .then(() => {
+                navigate("/projects")
             })
 
             if (!response.ok) {

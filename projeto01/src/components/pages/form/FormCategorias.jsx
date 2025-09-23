@@ -2,8 +2,11 @@ import styles from "../../project/styles/ProjectForm.module.css"
 import Input from "../../form/input"
 import Submit from "../../form/Submit"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const FormCategoria = ({btnText}) => {
+
+    const navigate = useNavigate()
 
     const [nome, setNome] = useState("")
 
@@ -21,6 +24,9 @@ const FormCategoria = ({btnText}) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(novaCategoira)
+            })
+            .then(() => {
+                navigate("/categorias")
             })
 
 

@@ -106,6 +106,31 @@ app.delete("/categorias/:id", async (req, res) => {
     }
 })
 
+app.patch("/categorias/editar/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        const novoNome = req.body.nome
+
+        if (!novoNome) {
+            return res.status(400).json()
+        }
+
+        const categoriaEditada = await Categoria.findByIdAndUpdate(
+            id,
+            { nome: novoNome },
+            { new: true, runValidators: true }
+        )
+
+        if (!categoriaEditada) {
+            return res.status(404).json()
+        }
+
+        res.status(200).json(categoriaEditada)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 app.listen(8085, () => {
     console.log("Servidor Rodando")
 })
