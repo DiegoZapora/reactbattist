@@ -9,7 +9,7 @@ const ProjectForm = ({btnText}) => {
     const [nome, setNome] = useState("")
     const [budget, setBudget] = useState()
     const [categoria, setCategoria] = useState("")
-    const [cateogiras, SetCategorias] = useState([])
+    const [pegoucategorias, SetPegouCategorias] = useState([])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -52,7 +52,7 @@ const ProjectForm = ({btnText}) => {
                 }
 
                 const data = await res.json()
-                SetCategorias(data)
+                SetPegouCategorias(data)
             } catch (err) {
                 console.log(err)
             }
@@ -68,7 +68,7 @@ const ProjectForm = ({btnText}) => {
 
             <Input type={"number"} text={"Orçamento do Projeto: "} name={"budget"} placeholder={"Insira o orçamento"} handleOnChance={(e) => setBudget(e.target.value)} value={budget} />
 
-            <Select text={"Selecione a Categoria"} name={"categoryId"} options={cateogiras} handleOnChange={(e) => setCategoria(e.target.value)} value={categoria} />
+            <Select text={"Selecione a Categoria"} name={"categoryId"} options={pegoucategorias} handleOnChange={(e) => setCategoria(e.target.value)} value={categoria}/>
 
             <Submit text={btnText} />
 

@@ -90,6 +90,22 @@ app.get("/categorias", async (req, res) => {
     }
 })
 
+app.delete("/categorias/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        const categoriaDeletada = await Categoria.findByIdAndDelete(id)
+
+        if (!categoriaDeletada) {
+            return res.status(404)
+        }
+
+        res.status(200).json()
+    } catch (err) {
+        console.log(err)
+        res.status(500).json()
+    }
+})
+
 app.listen(8085, () => {
     console.log("Servidor Rodando")
 })

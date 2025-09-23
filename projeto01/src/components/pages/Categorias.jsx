@@ -20,15 +20,40 @@ const Categoiras = () => {
             }
         }
 
+
         fetchCateogiras()
+
     }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch(`http://localhost:8085/categorias/${id}`, {
+                method: "DELETE"
+            })
+
+            if (!res.ok) {
+                throw new Error("Falha ao deletar categoria!")
+            }
+
+            setCategorias(categorias.filter(categoria => categoria._id !== id))
+        } catch (err) {
+            console.log(err)
+        }
+    }
     
     return (
         <div className={styles.container}>
             <h1>Categorias: </h1>
+
             {categorias.map(categoria => (
-                <p key={categoria._id}>{categoria.nome}</p>
+                <div key={categoria._id} className={styles.divBtn}>
+
+                    <div className={styles.divCard}>{categoria.nome}</div>
+                    <button className={styles.btnDelet} onClick={() => handleDelete(categoria._id)}>Excluir</button>
+
+                </div>
             ))}
+
             <Link to={"/categorias/add"}>Crie uma Categoria</Link>
         </div>
     )
