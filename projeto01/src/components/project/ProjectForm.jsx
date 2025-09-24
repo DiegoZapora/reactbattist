@@ -5,14 +5,9 @@ import Submit from "../form/Submit"
 import styles from "./styles/ProjectForm.module.css"
 import { useNavigate } from "react-router-dom"
 
-const ProjectForm = ({btnText}) => {
+const ProjectForm = ({ btnText }) => {
 
     const navigate = useNavigate()
-
-    const createPost = (project) => {
-        project.cost = 0
-        project.services = []
-    }
 
     const [nome, setNome] = useState("")
     const [budget, setBudget] = useState()
@@ -36,18 +31,17 @@ const ProjectForm = ({btnText}) => {
                 },
                 body: JSON.stringify(novoProjeto)
             })
-            .then(() => {
-                navigate("/projects")
-            })
 
             if (!response.ok) {
                 throw new Error(`Erro: ${response.status}`)
             }
 
+            navigate("/projects")
 
             setNome("")
             setBudget("")
             setCategoria("")
+            
         } catch (error) {
             console.log("Erro ao enviar dados", error)
         }
@@ -75,11 +69,11 @@ const ProjectForm = ({btnText}) => {
     return (
         <form className={styles.form} onSubmit={handleSubmit} method="POST">
 
-            <Input type={"text"} text={"Nome do Projeto: "} name={"nome"}placeholder={"Digite o nome do projeto"} handleOnChance={(e) => setNome(e.target.value)} value={nome}/>
+            <Input type={"text"} text={"Nome do Projeto: "} name={"nome"} placeholder={"Digite o nome do projeto"} handleOnChance={(e) => setNome(e.target.value)} value={nome} />
 
             <Input type={"number"} text={"Orçamento do Projeto: "} name={"budget"} placeholder={"Insira o orçamento"} handleOnChance={(e) => setBudget(e.target.value)} value={budget} />
 
-            <Select text={"Selecione a Categoria"} name={"categoryId"} options={pegoucategorias} handleOnChange={(e) => setCategoria(e.target.value)} value={categoria}/>
+            <Select text={"Selecione a Categoria"} name={"categoryId"} options={pegoucategorias} handleOnChange={(e) => setCategoria(e.target.value)} value={categoria} />
 
             <Submit text={btnText} />
 

@@ -70,6 +70,22 @@ app.get("/projects", async (req, res) => {
     }
 })
 
+app.delete("/projects/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        const projetoDeletado = await Projeto.findByIdAndDelete(id)
+
+        if (!projetoDeletado) {
+            return res.status(404)
+        }
+
+        res.status(200).json()
+    } catch (err) {
+        console.log(err)
+        res.status(500).json()
+    }
+})
+
 app.post("/categorias", async (req, res) => {
     try {
         const novaCategoira = new Categoria(req.body)
