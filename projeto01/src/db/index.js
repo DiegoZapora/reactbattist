@@ -1,7 +1,6 @@
 import express from "express"
 import mongoose, { Schema } from "mongoose"
 import cors from "cors"
-import flash from "connect-flash"
 import session from "express-session"
 
 const app = express()
@@ -13,12 +12,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-app.use(flash())
-app.use((req, res, next) => {
-    res.locals.sucessoMSG = req.flash("sucessoMSG"),
-    res.locals.erroMSG = req.flash("erroMSG")
-    next()
-})
 
 mongoose.connect("mongodb://localhost/costs")
 

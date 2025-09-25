@@ -15,8 +15,6 @@ const Projects = () => {
     useEffect(() => {
         if (location.state && location.state.message) {
             setMessage( {msg: location.state.message, type: location.state.type})
-        } else {
-            setMessage(null)
         }
 
         const timer = setTimeout(() => {
