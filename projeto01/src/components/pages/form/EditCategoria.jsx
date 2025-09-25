@@ -37,7 +37,9 @@ const EditCategoria = () => {
                 throw new Error("Falha ao atualizar categoria.")
             }
 
-            navigate("/categorias")
+            navigate("/categorias", {
+                state: { message: "Categoria Editada com sucesso", type: "success"}
+            })
         } catch (Err) {
             console.log(Err)
         }

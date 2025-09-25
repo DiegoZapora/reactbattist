@@ -1,10 +1,27 @@
 import { useEffect, useState } from "react"
 import styles from "./styles/NewProject.module.css"
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import Msg from "../layout/partials/msg"
 
 const Categoiras = () => {
 
     const [categorias, setCategorias] = useState([])
+    const [message, setMessage] = useState(null)
+
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (location.state && location.state.message) {
+            setMessage( {msg: location.state.message, type: location.state.type})
+        } else {
+            setMessage(null)
+        }
+
+        const timer = setTimeout(() => {
+            setMessage(null)
+        }, 3000)
+    }, [location.state])
 
     useEffect(() => {
         const fetchCateogiras = async () => {
@@ -36,6 +53,9 @@ const Categoiras = () => {
             }
 
             setCategorias(categorias.filter(categoria => categoria._id !== id))
+            navigate("/categorias", {
+                state: { message: "Categoria deletada com sucesso", type: "success"}
+            })
         } catch (err) {
             console.log(err)
         }
@@ -45,6 +65,7 @@ const Categoiras = () => {
 
     return (
         <div className={styles.container}>
+            {message && <Msg msg={message.msg} type={message.type}/>}
             <h1>Categorias: </h1>
 
             {categorias.length === 0 ? (

@@ -86,6 +86,31 @@ app.delete("/projects/:id", async (req, res) => {
     }
 })
 
+app.patch("/projects/editar/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        const dadosAtualizdos = req.body
+
+        if (Object.keys(dadosAtualizdos).length === 0) {
+            return res.status(400).json()
+        }
+
+        const projetoAtualido = await Projeto.findByIdAndUpdate(
+            id,
+            dadosAtualizdos,
+            { new: true, runValidators: true}
+        )
+
+        if (!projetoAtualido) {
+            return res.status(404).json()
+        }
+
+        res.status(200).json(projetoAtualido)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 app.post("/categorias", async (req, res) => {
     try {
         const novaCategoira = new Categoria(req.body)

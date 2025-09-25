@@ -25,15 +25,17 @@ const FormCategoria = ({btnText}) => {
                 },
                 body: JSON.stringify(novaCategoira)
             })
-            .then(() => {
-                navigate("/categorias")
-            })
+
 
 
             if (!res.ok) {
                 throw new Error(`Erro: ${res.status}`)
             }
 
+            navigate("/categorias", {
+                state: { message: "Categoria criada com sucesso", type: "success"}
+            })
+            
             setNome("")
         } catch (error) {
             console.log("Erro ao enviar dados", error)

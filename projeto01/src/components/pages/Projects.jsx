@@ -1,11 +1,31 @@
 import { useEffect, useState } from "react"
 import styles from "./styles/Projects.module.css"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import Msg from "../layout/partials/msg"
 
 const Projects = () => {
 
     const [projetos, Setprojetos] = useState([])
+    const [message, setMessage] = useState(null)
+
+    const location = useLocation()
+    const navigate = useNavigate()
+
 
     useEffect(() => {
+        if (location.state && location.state.message) {
+            setMessage( {msg: location.state.message, type: location.state.type})
+        } else {
+            setMessage(null)
+        }
+
+        const timer = setTimeout(() => {
+            setMessage(null)
+        }, 3000)
+    }, [location.state])
+
+    useEffect(() => {
+
         const fechProjetos = async () => {
             try {
                 const res = await fetch("http://localhost:8085/projects")
@@ -36,14 +56,20 @@ const Projects = () => {
             }
 
             Setprojetos(projetos.filter(projeto => projeto._id !== id))
+            navigate("/projects", {
+                state: { message: "Projeto deletado com sucesso", type: "success"}
+            })
         } catch (err) {
-            console.log(err)
+            navigate("/projects", {
+                state: { message: "Erro ao deletar Projeto!", type: "error"}
+            })
         }
     }
 
     return (
 
         <div className={styles.container}>
+            {message && <Msg msg={message.msg} type={message.type}/>}
             <h1>Projetos: </h1>
             {projetos.length === 0 ? (
                 <p>Nenhum projeto cadastrado.</p>
@@ -58,7 +84,7 @@ const Projects = () => {
 
                                 <button className={styles.botao} onClick={() => handleDelete(projeto._id)}>Excluir</button>
 
-                                <button className={styles.botao}>Editar</button>
+                                <Link className={styles.botao} to={`/projects/editar/${projeto._id}`}>Editar</Link>
                                 
                             </div>
                         </div>

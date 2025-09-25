@@ -36,14 +36,18 @@ const ProjectForm = ({ btnText }) => {
                 throw new Error(`Erro: ${response.status}`)
             }
 
-            navigate("/projects")
+            navigate("/projects", {
+                state: { message: "Projeto criado com sucesso!", type: "success"}
+            })
 
             setNome("")
             setBudget("")
             setCategoria("")
             
         } catch (error) {
-            console.log("Erro ao enviar dados", error)
+            navigate("/projects", {
+                state: { message: "Erro ao criar projeto!", type: "error"}
+            })
         }
     }
 
