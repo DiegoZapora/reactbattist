@@ -28,7 +28,7 @@ function App() {
           <Route path="/categorias" element={<Categoiras />}></Route>
           <Route path="/categorias/add" element={<AddCategorias />}></Route>
           <Route path="/categorias/editar/:id" element={<EditCategoria />}></Route>
-          <Route path="/projects/editar/:id" element={<EditProject />}></Route>
+          <Route path="/projects/:id" element={<EditProject />}></Route>
           <Route path="/company" element={<Company />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/newproject" element={<NewProject />}></Route>

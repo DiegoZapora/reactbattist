@@ -71,6 +71,9 @@ const Projects = () => {
     return (
 
         <div className={styles.container}>
+            <div className={styles.divSamp}>
+                <Link className={styles.botao} to={"/newproject"}>Criar Projeto</Link>
+            </div>
             {message && <Msg msg={message.msg} type={message.type} />}
             <h1>Projetos: </h1>
             {projetos.length === 0 ? (
@@ -86,7 +89,7 @@ const Projects = () => {
 
                                 <button className={styles.botao} onClick={() => handleDelete(projeto._id)}>Excluir</button>
 
-                                <Link className={styles.botao} to={`/projects/editar/${projeto._id}`}>Editar</Link>
+                                <Link className={styles.botao} to={`/projects/${projeto._id}`}>Editar</Link>
 
                             </div>
                         </div>

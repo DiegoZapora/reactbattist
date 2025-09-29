@@ -79,7 +79,16 @@ app.delete("/projects/:id", async (req, res) => {
     }
 })
 
-app.patch("/projects/editar/:id", async (req, res) => {
+app.get("/projects/:id", async (req, res) => {
+    try {
+        const projetos = await Projeto.find().populate("categoria")
+        res.status(200).json(projetos)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+app.patch("/projects/:id", async (req, res) => {
     try {
         const id = req.params.id
         const dadosAtualizdos = req.body

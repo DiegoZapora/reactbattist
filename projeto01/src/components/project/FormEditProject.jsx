@@ -14,51 +14,56 @@ const EditProject = () => {
     const [budget, setBudget] = useState("")
     const [categoria, setCategoria] = useState({})
     const [categorias, setCategorias] = useState([])
-    const [message, setMessage] = useState(null)
+
+    const [isReady, setIsReady] = useState(false)
+
+
 
     useEffect(() => {
-        if (location.state && location.state.message) {
-            setMessage( {msg: location.state.message, type: location.state.type})
-        } else {
-            setMessage(null)
+
+        const fetchCategorias = async () => {
+            const res = await fetch("http://localhost:8085/categorias")
+            const data = await res.json()
+            setCategorias(data)
         }
 
-        const timer = setTimeout(() => {
-            setMessage(null)
-        }, 3000)
-    }, [location.state])
+        const fetchData = async () => {
+            try {
+                const res = await fetch(`http://localhost:8085/projects/${id}`)
+                if (!res.ok) { throw new Error("Falha ao buscar projeto!") }
 
-    useEffect(() => {
-            const fetchProjetos = async () => {
-                const res = await fetch(`http://localhost:8085/projects/editar/${id}`)
-                const data = await res.json()
-                setNome(data.nome)
-                setBudget(data.budget)
-                setCategoria(data.categoria)
+                const projetoData = await res.json()
+
+                await fetchCategorias()
+
+                setNome(projetoData.nome || "")
+                setBudget(projetoData.budget || "")
+                setCategoria(projetoData.categoria || {})
+
+                setIsReady(true)
+
+            } catch (err) {
+                console.error("Erro ao carregar projeto", err)
+                navigate("/projects")
             }
+        }
 
-            fetchProjetos()
+        fetchData()
 
-            const fetchCategorias = async () => {
-                const res = await fetch("http://localhost:8085/categorias")
-                const data = await res.json()
-                setCategorias(data)
-            }
-
-            fetchCategorias()
-    }, [id])
+    }, [id, navigate])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         const dadosAtualizados = {
             nome,
-            budget,
+            budget: Number(budget),
             categoria: categoria._id
         }
 
+
         try {
-            const res = await fetch(`http://localhost:8085/projects/editar/${id}`, {
+            const res = await fetch(`http://localhost:8085/projects/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -66,38 +71,59 @@ const EditProject = () => {
                 body: JSON.stringify(dadosAtualizados)
             })
 
-            if (!res.ok) {
-                throw new Error("Falha ao atualizar Projeto")
-            }
+            if (!res.ok) { throw new Error("Falha ao atualizar projeto") }
 
-            navigate("/projects", {
-                state: { message: "Projeto Editado com sucesso", type: "success"}
-            })
+            navigate("/projects")
+
         } catch (err) {
-            navigate("/projects", {
-                state: { message: "Projeto Editado com sucesso", type: "success"}
-            })
+            console.error(err)
         }
+
     }
 
-
-
     return (
-        <div className={styles.card}>
-            <form className={styles.form} onSubmit={handleSubmit}>
-                <Input type={"text"} text={"Atualize o Nome do Projeto: "} name={"nome"} placeholder={"Digite o nome do projeto"} handleOnChance={(e) => setNome(e.target.value)} value={nome} />
-                <Input type={"number"} text={"Atualize Orçamento do Projeto: "} name={"budget"} placeholder={"Insira o orçamento"} handleOnChance={(e) => setBudget(e.target.value)} value={budget} />
-                <Select text={"Selecione a Categoria"} name={categoria} options={categorias} value={categoria._id} handleOnChange={(e) => {
-                    const idSelecionado = e.target.value
-                    const cat = categorias.find(c => c._id === idSelecionado)
-                    setCategoria(cat)
-                }}/>
-            
-                <Submit text={"Atualizar Projeto"}/>
-            </form>
-        </div>
-    )
 
+        <div className={styles.card}>
+
+            {!isReady ? (
+                <p>Carregando formuário de edição...</p>
+            ) : (
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <Input
+                        type={"text"}
+                        text={"Novo Nome: "}
+                        name={"nome"}
+                        placeholder={"Digite o novo nome"}
+                        handleOnChange={(e) => setNome(e.target.value)}
+                        value={nome || ""}
+                    />
+
+                    <Input
+                        type={"number"}
+                        text={"Novo Orçamento: "}
+                        name={"budget"}
+                        placeholder={"Digite o novo orçamento"}
+                        handleOnChange={(e) => setBudget(e.target.value)}
+                        value={budget || ""}
+                    />
+                    <Select
+                        text={"Selecione Categoria: "}
+                        name={"categoria"}
+                        value={categoria?._id}
+                        options={categorias}
+                        handleOnChange={(e) => {
+                            const idSelecionado = e.target.value
+                            const cat = categorias.find(c => c._id === idSelecionado)
+                            setCategoria(cat)
+                        }}
+                    />
+                    <Submit text={"Editar Projeto"} />
+                </form>
+            )}
+
+        </div>
+
+    )
 }
 
 export default EditProject
