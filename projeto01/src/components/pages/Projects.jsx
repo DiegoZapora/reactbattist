@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import styles from "./styles/Projects.module.css"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import Msg from "../layout/partials/msg"
+import Loading from "../layout/Loading"
 
 const Projects = () => {
 
     const [projetos, Setprojetos] = useState([])
     const [message, setMessage] = useState(null)
+    const [removeLoading, setRemoveLoading] = useState(false)
 
     const location = useLocation()
     const navigate = useNavigate()
@@ -14,7 +16,7 @@ const Projects = () => {
 
     useEffect(() => {
         if (location.state && location.state.message) {
-            setMessage( {msg: location.state.message, type: location.state.type})
+            setMessage({ msg: location.state.message, type: location.state.type })
         }
 
         const timer = setTimeout(() => {
@@ -34,6 +36,7 @@ const Projects = () => {
 
                 const data = await res.json()
                 Setprojetos(data)
+                setRemoveLoading(true)
 
             } catch (err) {
                 console.log(err)
@@ -41,6 +44,7 @@ const Projects = () => {
         }
 
         fechProjetos()
+
     }, [])
 
     const handleDelete = async (id) => {
@@ -55,11 +59,11 @@ const Projects = () => {
 
             Setprojetos(projetos.filter(projeto => projeto._id !== id))
             navigate("/projects", {
-                state: { message: "Projeto deletado com sucesso", type: "success"}
+                state: { message: "Projeto deletado com sucesso", type: "success" }
             })
         } catch (err) {
             navigate("/projects", {
-                state: { message: "Erro ao deletar Projeto!", type: "error"}
+                state: { message: "Erro ao deletar Projeto!", type: "error" }
             })
         }
     }
@@ -67,7 +71,7 @@ const Projects = () => {
     return (
 
         <div className={styles.container}>
-            {message && <Msg msg={message.msg} type={message.type}/>}
+            {message && <Msg msg={message.msg} type={message.type} />}
             <h1>Projetos: </h1>
             {projetos.length === 0 ? (
                 <p>Nenhum projeto cadastrado.</p>
@@ -83,12 +87,13 @@ const Projects = () => {
                                 <button className={styles.botao} onClick={() => handleDelete(projeto._id)}>Excluir</button>
 
                                 <Link className={styles.botao} to={`/projects/editar/${projeto._id}`}>Editar</Link>
-                                
+
                             </div>
                         </div>
                     ))}
                 </div>
             )}
+            {!removeLoading && <Loading />}
         </div>
     )
 
